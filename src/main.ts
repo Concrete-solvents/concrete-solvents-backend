@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import fastifyCookie from 'fastify-cookie';
 import helmet from 'helmet';
 
 // Modules
@@ -16,6 +17,9 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+  await app.register(fastifyCookie, {
+    secret: 'my-secret',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Concrete Solvents')

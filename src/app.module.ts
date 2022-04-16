@@ -1,8 +1,11 @@
+import { AuthModule } from '@Auth/auth.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from '@User/user.module';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
+import { JwtLocalModule } from './jwt-local/jwt-local.module';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { getTypeormConfig } from '../configs/typeorm.config';
       inject: [ConfigService],
       useFactory: getTypeormConfig,
     }),
+    JwtLocalModule,
+    UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

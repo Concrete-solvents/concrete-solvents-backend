@@ -13,7 +13,7 @@ const getTypeormConfig = async (
   database: configService.get<string>('DB_DATABASE'),
   synchronize: true,
   logging: false,
-  entities: [],
+  autoLoadEntities: true,
   ssl: process.env.NODE_ENV === 'prod' && { rejectUnauthorized: false },
 });
 
