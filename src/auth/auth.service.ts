@@ -9,9 +9,10 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@User/entities/user.entity';
 
 // Auth
-import { RegistrationDto } from '@Auth/dtos/registration.dto';
-import { LoginDto } from '@Auth/dtos/login.dto';
-import { AccessTokenDto } from '@Auth/dtos/access-token.dto';
+import { RegistrationRequest } from '@Auth/dtos/registration-request.dto';
+import { LoginRequest } from '@Auth/dtos/login-request.dto';
+import { LoginResponseWithAccessToken } from '@Auth/dtos/login-response-with-access-token.dto';
+import { RegistrationResponseWithAccessToken } from '@Auth/dtos/registration-response-with-access-token.dto';
 
 // Common
 import { CustomError } from '@Common/enums/custom-errors';
@@ -25,7 +26,9 @@ export class AuthService {
     private readonly _userRepository: Repository<UserEntity>,
   ) {}
 
-  async login(loginDto: LoginDto): Promise<CoreResponse | AccessTokenDto> {
+  async login(
+    loginDto: LoginRequest,
+  ): Promise<CoreResponse | LoginResponseWithAccessToken> {
     const userInDB = await this._userRepository.findOne({
       where: {
         username: loginDto.username,
@@ -51,14 +54,22 @@ export class AuthService {
       };
     }
 
-    const payload = { username: userInDB.username, id: userInDB.id };
+    const payload = {
+      username: userInDB.username,
+      id: userInDB.id,
+      email: userInDB.email,
+    };
 
     return {
-      access_token: this._jwtService.sign(payload, { expiresIn: '30d' }),
+      isSuccess: true,
+      user: payload,
+      accessToken: this._jwtService.sign(payload, { expiresIn: '30d' }),
     };
   }
 
-  async register(registrationDto: RegistrationDto) {
+  async register(
+    registrationDto: RegistrationRequest,
+  ): Promise<CoreResponse | RegistrationResponseWithAccessToken> {
     const isUserAlreadyExist = await this._userRepository.findOne({
       where: {
         username: registrationDto.username,
@@ -72,7 +83,7 @@ export class AuthService {
       };
     }
 
-    const isUsernameCompatibleWithPattern = /^[A-z0-9_-]+$/.test(
+    const isUsernameCompatibleWithPattern = /^[A-z0-9]+$/.test(
       registrationDto.username,
     );
 
@@ -83,18 +94,22 @@ export class AuthService {
       };
     }
 
+    registrationDto.username = registrationDto.username.toLowerCase();
+
     const newUserInstance = await this._userRepository.create(registrationDto);
 
     const userInDB = await this._userRepository.save(newUserInstance);
 
-    const payload = { username: userInDB.username, id: userInDB.id };
+    const payload = {
+      username: userInDB.username,
+      id: userInDB.id,
+      email: userInDB.email,
+    };
 
     return {
-      access_token: this._jwtService.sign(payload, { expiresIn: '30d' }),
+      user: payload,
+      accessToken: this._jwtService.sign(payload, { expiresIn: '30d' }),
+      isSuccess: true,
     };
-  }
-
-  async logout() {
-    return this._jwtService.sign({}, { expiresIn: 1 });
   }
 }

@@ -6,6 +6,9 @@ import { Injectable } from '@nestjs/common';
 // Auth
 import { cookieExtractor } from '@Auth/extractors/cookie.extractor';
 
+// User
+import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
@@ -16,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { id: payload.id, username: payload.username };
+  async validate(payload: UserBaseResponse) {
+    return payload;
   }
 }

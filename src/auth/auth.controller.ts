@@ -1,24 +1,19 @@
 // Libraries
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Post,
-  Res,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FastifyReply } from 'fastify';
+
+// Auth
+import { AuthService } from '@Auth/auth.service';
+import { LoginRequest } from '@Auth/dtos/login-request.dto';
+import { LoginResponseWithAccessToken } from '@Auth/dtos/login-response-with-access-token.dto';
+import { LoginResponse } from '@Auth/dtos/login-response.dto';
+import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
+import { RegistrationRequest } from '@Auth/dtos/registration-request.dto';
 
 // Common
 import { CoreResponse } from '@Common/dtos/core-response.dto';
 import { CustomError } from '@Common/enums/custom-errors';
-
-// Auth
-import { AuthService } from '@Auth/auth.service';
-import { LoginDto } from '@Auth/dtos/login.dto';
-import { RegistrationDto } from '@Auth/dtos/registration.dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -29,79 +24,88 @@ export class AuthController {
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Set cookie token',
-    type: CoreResponse,
+    description: 'Set a token in the cookie',
+    type: LoginResponse,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Wrong login or password',
     type: CoreResponse,
   })
-  @UsePipes(ValidationPipe)
   async login(
-    @Body() loginDto: LoginDto,
+    @Body() loginDto: LoginRequest,
     @Res({ passthrough: true }) res: FastifyReply,
-  ): Promise<CoreResponse> {
+  ): Promise<CoreResponse | LoginResponse> {
     const result = await this.authService.login(loginDto);
 
-    if ((result as CoreResponse).error === CustomError.WrongLoginOrPassword) {
+    if (
+      !result.isSuccess &&
+      result.error === CustomError.WrongLoginOrPassword
+    ) {
       res.status(HttpStatus.UNAUTHORIZED);
-      return result as CoreResponse;
+      return result;
     }
 
     res.cookie('jwt', result['access_token'], {
       maxAge: 36000000,
       sameSite: 'none',
       secure: true,
+      path: '/',
+      httpOnly: true,
     });
+
     return {
       isSuccess: true,
+      user: (result as LoginResponseWithAccessToken).user,
     };
   }
 
   @Post('register')
-  @UsePipes(ValidationPipe)
   @ApiOperation({ summary: 'Register user' })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Register new user and set token to cookie',
-    type: CoreResponse,
+    description: 'Register a new user and set a token in the cookie',
+    type: RegistrationResponse,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
-    description: 'Username incompatible with pattern',
+    description: 'The username is not compatible with the template',
     type: CoreResponse,
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: 'User already exist',
+    description: 'The user already exists',
     type: CoreResponse,
   })
   async register(
-    @Body() registrationDto: RegistrationDto,
+    @Body() registrationDto: RegistrationRequest,
     @Res({ passthrough: true }) res: FastifyReply,
-  ): Promise<CoreResponse> {
+  ): Promise<RegistrationResponse | CoreResponse> {
     const result = await this.authService.register(registrationDto);
 
-    if ((result as CoreResponse).error === CustomError.AlreadyExist) {
+    if (!result.isSuccess && result.error === CustomError.AlreadyExist) {
       res.status(HttpStatus.CONFLICT);
-      return result as CoreResponse;
+      return result;
     }
 
     if (
-      (result as CoreResponse).error ===
-      CustomError.UsernameIncompatibleWithPattern
+      !result.isSuccess &&
+      result.error === CustomError.UsernameIncompatibleWithPattern
     ) {
       res.status(HttpStatus.BAD_REQUEST);
-      return result as CoreResponse;
+      return result;
     }
 
     res.cookie('jwt', result['access_token'], {
       maxAge: 36000000,
       sameSite: 'none',
       secure: true,
+      path: '',
+      httpOnly: true,
     });
+
     return {
+      user: (result as RegistrationResponse).user,
       isSuccess: true,
     };
   }
@@ -114,6 +118,8 @@ export class AuthController {
       expires: new Date(1),
       sameSite: 'none',
       secure: true,
+      path: '',
+      httpOnly: true,
     });
 
     return {
