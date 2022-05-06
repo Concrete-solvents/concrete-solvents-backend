@@ -1,9 +1,11 @@
 export enum CustomError {
-  UserNotExist = "User don't exist",
-  RoomNotExist = "Room don't exist",
-  AlreadyExist = 'Already exist',
+  UserWithGivenUsernameAlreadyExist = 'User with given username already exist',
+  UserWithGivenEmailAlreadyExist = 'User with given email already exist',
   PermissionError = 'Permission error',
-  WrongRequestBody = 'Wrong request body',
-  WrongLoginOrPassword = 'Wrong login or password',
-  UsernameIncompatibleWithPattern = 'Username Incompatible With Pattern',
+  WrongUsernameOrPassword = 'Wrong username or password',
+  UsernameIncompatibleWithPattern = 'The username is not compatible with the template',
+  UserDoesNotExist = 'The user does not exist',
+  EmailDoesNotLinked = 'The email does not linked',
+  EmailAlreadyConfirmed = 'The email already confirmed',
+  EmailNotFoundOrNotConfirmed = 'Email not found or not confirmed',
 }

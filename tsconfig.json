@@ -20,7 +20,9 @@
     "paths": {
       "@Auth/*": ["./auth/*"],
       "@Common/*": ["./common/*"],
-      "@User/*": ["./user/*"]
+      "@User/*": ["./user/*"],
+      "@Email/*": ["./email/*"],
+      "@Mailer/*": ["./nodeMailer/*"],
     }
   }
 }

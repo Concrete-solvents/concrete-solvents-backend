@@ -1,20 +1,28 @@
 // Libraries
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 // Common
 import { CoreEntity } from '@Common/entities/core.entity';
+import { EmailEntity } from '@Email/entities/email.entity';
 
 @Entity('users')
 class UserEntity extends CoreEntity {
   @Column({ unique: true })
   username: string;
 
-  @Column({ unique: true })
-  email: string;
+  @OneToOne(() => EmailEntity, (email) => email.user, { nullable: true })
+  @JoinColumn()
+  email?: EmailEntity;
 
   @Column()
   password: string;
+
+  @Column({ default: '' })
+  avatarUrl: string;
+
+  @Column({ nullable: true })
+  socialId: string;
 
   @BeforeInsert()
   async hashPassword() {

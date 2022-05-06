@@ -1,4 +1,5 @@
 // Libraries
+import { EmailEntity } from '@Email/entities/email.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -11,12 +12,11 @@ import { UserEntity } from '@User/entities/user.entity';
 // Auth
 import { RegistrationRequest } from '@Auth/dtos/registration-request.dto';
 import { LoginRequest } from '@Auth/dtos/login-request.dto';
-import { LoginResponseWithAccessToken } from '@Auth/dtos/login-response-with-access-token.dto';
-import { RegistrationResponseWithAccessToken } from '@Auth/dtos/registration-response-with-access-token.dto';
+import { LoginResponse } from '@Auth/dtos/login-response.dto';
+import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
 
 // Common
 import { CustomError } from '@Common/enums/custom-errors';
-import { CoreResponse } from '@Common/dtos/core-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -24,21 +24,23 @@ export class AuthService {
     private readonly _jwtService: JwtService,
     @InjectRepository(UserEntity)
     private readonly _userRepository: Repository<UserEntity>,
+    @InjectRepository(EmailEntity)
+    private readonly _emailRepository: Repository<EmailEntity>,
   ) {}
 
-  async login(
-    loginDto: LoginRequest,
-  ): Promise<CoreResponse | LoginResponseWithAccessToken> {
+  async login(loginDto: LoginRequest): Promise<LoginResponse> {
     const userInDB = await this._userRepository.findOne({
       where: {
         username: loginDto.username,
       },
+      relations: ['email'],
     });
 
     if (!userInDB) {
       return {
         isSuccess: false,
-        error: CustomError.WrongLoginOrPassword,
+        error: CustomError.WrongUsernameOrPassword,
+        user: null,
       };
     }
 
@@ -50,26 +52,25 @@ export class AuthService {
     if (!isPasswordCorrect) {
       return {
         isSuccess: false,
-        error: CustomError.WrongLoginOrPassword,
+        error: CustomError.WrongUsernameOrPassword,
+        user: null,
       };
     }
 
-    const payload = {
-      username: userInDB.username,
-      id: userInDB.id,
-      email: userInDB.email,
-    };
-
     return {
       isSuccess: true,
-      user: payload,
-      accessToken: this._jwtService.sign(payload, { expiresIn: '30d' }),
+      user: {
+        username: userInDB.username,
+        id: userInDB.id,
+        email: userInDB.email.value,
+        avatarUrl: userInDB.avatarUrl,
+      },
     };
   }
 
   async register(
     registrationDto: RegistrationRequest,
-  ): Promise<CoreResponse | RegistrationResponseWithAccessToken> {
+  ): Promise<RegistrationResponse> {
     const isUserAlreadyExist = await this._userRepository.findOne({
       where: {
         username: registrationDto.username,
@@ -79,7 +80,8 @@ export class AuthService {
     if (isUserAlreadyExist) {
       return {
         isSuccess: false,
-        error: CustomError.AlreadyExist,
+        error: CustomError.UserWithGivenUsernameAlreadyExist,
+        user: null,
       };
     }
 
@@ -91,24 +93,34 @@ export class AuthService {
       return {
         isSuccess: false,
         error: CustomError.UsernameIncompatibleWithPattern,
+        user: null,
       };
     }
 
     registrationDto.username = registrationDto.username.toLowerCase();
 
-    const newUserInstance = await this._userRepository.create(registrationDto);
+    const email = await this._emailRepository.create({
+      value: registrationDto.email,
+    });
+
+    await this._emailRepository.save(email);
+
+    const newUserInstance = await this._userRepository.create({
+      username: registrationDto.username,
+      avatarUrl: registrationDto.username || '',
+      password: registrationDto.password,
+      email: email,
+    });
 
     const userInDB = await this._userRepository.save(newUserInstance);
 
-    const payload = {
-      username: userInDB.username,
-      id: userInDB.id,
-      email: userInDB.email,
-    };
-
     return {
-      user: payload,
-      accessToken: this._jwtService.sign(payload, { expiresIn: '30d' }),
+      user: {
+        username: userInDB.username,
+        id: userInDB.id,
+        email: email.value,
+        avatarUrl: userInDB.avatarUrl,
+      },
       isSuccess: true,
     };
   }
