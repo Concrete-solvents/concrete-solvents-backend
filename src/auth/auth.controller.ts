@@ -35,7 +35,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: 'Wrong login or password',
+    description: CustomError.WrongUsernameOrPassword,
     type: LoginResponse,
   })
   async login(
@@ -52,16 +52,12 @@ export class AuthController {
       return result;
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
+    res.cookie('jwt', this._jwtService.sign(result.user), BASE_JWT_OPTION);
 
     return result;
   }
 
-  @Post('register')
+  @Post('registration')
   @ApiOperation({ summary: 'Register user' })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -78,17 +74,16 @@ export class AuthController {
     description: 'The user already exists',
     type: RegistrationResponse,
   })
-  async register(
+  async registration(
     @Body() registrationDto: RegistrationRequest,
     @Res({ passthrough: true }) res: Response,
   ): Promise<RegistrationResponse> {
-    const result = await this._authService.register(registrationDto);
+    const result = await this._authService.registration(registrationDto);
 
     if (
       !result.isSuccess &&
-      result.error ===
-        (CustomError.UserWithGivenUsernameAlreadyExist ||
-          CustomError.UserWithGivenEmailAlreadyExist)
+      (result.error === CustomError.UserWithGivenUsernameAlreadyExist ||
+        result.error === CustomError.UserWithGivenEmailAlreadyExist)
     ) {
       res.status(HttpStatus.CONFLICT);
       return result;
@@ -102,11 +97,7 @@ export class AuthController {
       return result;
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
+    res.cookie('jwt', this._jwtService.sign(result.user), BASE_JWT_OPTION);
 
     return result;
   }
@@ -115,7 +106,7 @@ export class AuthController {
   async logout(
     @Res({ passthrough: true }) res: Response,
   ): Promise<CoreResponse> {
-    res.cookie('jwt', '', { ...BASE_JWT_OPTION, ...{ expiresIn: '1ms' } });
+    res.cookie('jwt', '', { ...BASE_JWT_OPTION, ...{ maxAge: 1 } });
 
     return {
       isSuccess: true,

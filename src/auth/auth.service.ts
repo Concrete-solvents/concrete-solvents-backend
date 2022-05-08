@@ -68,7 +68,7 @@ export class AuthService {
     };
   }
 
-  async register(
+  async registration(
     registrationDto: RegistrationRequest,
   ): Promise<RegistrationResponse> {
     const isUserAlreadyExist = await this._userRepository.findOne({
