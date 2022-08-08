@@ -42,6 +42,7 @@
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
+    "passport-steam": "^1.0.17",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -57,6 +58,7 @@
     "@types/jest": "27.4.1",
     "@types/node": "^16.0.0",
     "@types/passport-google-oauth20": "^2.0.11",
+    "@types/passport-steam": "^1.0.1",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -80,11 +82,21 @@
       "ts"
     ],
     "moduleNameMapper": {
-      "^@Auth/(.*)$": ["<rootDir>/auth/$1"],
-      "^@Common/(.*)$": ["<rootDir>/common/$1"],
-      "^@User/(.*)$": ["<rootDir>/user/$1"],
-      "^@Email/(.*)$": ["<rootDir>/email/$1"],
-      "^@Mailer/(.*)$": ["<rootDir>/mailer/$1"]
+      "^@Auth/(.*)$": [
+        "<rootDir>/auth/$1"
+      ],
+      "^@Common/(.*)$": [
+        "<rootDir>/common/$1"
+      ],
+      "^@User/(.*)$": [
+        "<rootDir>/user/$1"
+      ],
+      "^@Email/(.*)$": [
+        "<rootDir>/email/$1"
+      ],
+      "^@Mailer/(.*)$": [
+        "<rootDir>/mailer/$1"
+      ]
     },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",

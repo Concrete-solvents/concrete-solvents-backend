@@ -5,7 +5,7 @@ import { CoreResponse } from '@Common/dtos/core-response.dto';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 
 class LoginResponse extends CoreResponse {
-  user: UserBaseResponse;
+  user?: UserBaseResponse;
 }
 
 export { LoginResponse };

@@ -18,11 +18,24 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@Auth/*": ["./auth/*"],
-      "@Common/*": ["./common/*"],
-      "@User/*": ["./user/*"],
-      "@Email/*": ["./email/*"],
-      "@Mailer/*": ["./nodeMailer/*"],
+      "@Auth/*": [
+        "./auth/*"
+      ],
+      "@Common/*": [
+        "./common/*"
+      ],
+      "@User/*": [
+        "./user/*"
+      ],
+      "@Email/*": [
+        "./email/*"
+      ],
+      "@Mailer/*": [
+        "./nodeMailer/*"
+      ],
+      "@Settings/*": [
+        "./settings/*"
+      ]
     }
   }
 }

@@ -1,7 +1,13 @@
+// Libraries
+import { Column, Entity } from 'typeorm';
+
+// Common
 import { CoreEntity } from '@Common/entities/core.entity';
-import { Entity } from 'typeorm';
 
 @Entity()
-class SettingsEntity extends CoreEntity {}
+class SettingsEntity extends CoreEntity {
+  @Column()
+  language: string;
+}
 
 export { SettingsEntity };

@@ -10,6 +10,7 @@ import { getNodeMailerConfig } from '../configs/nodeMailer.config';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
+import { SocialModule } from './social/social.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { JwtLocalModule } from './jwt-local/jwt-local.module';
     AuthModule,
     EmailModule,
     NodeMailerModule,
+    SocialModule,
   ],
 })
 export class AppModule {}

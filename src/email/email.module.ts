@@ -20,6 +20,7 @@ import { EmailEntity } from '@Email/entities/email.entity';
     NodeMailerModule,
     TypeOrmModule.forFeature([UserEntity, EmailEntity]),
   ],
+  exports: [EmailService],
 })
 class EmailModule {}
 

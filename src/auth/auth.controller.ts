@@ -7,11 +7,11 @@ import { Response } from 'express';
 
 // Auth
 import { AuthService } from '@Auth/auth.service';
+import { BASE_JWT_OPTION } from '@Auth/constants/base-jwt-options.constant';
 import { LoginRequest } from '@Auth/dtos/login-request.dto';
 import { LoginResponse } from '@Auth/dtos/login-response.dto';
-import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
 import { RegistrationRequest } from '@Auth/dtos/registration-request.dto';
-import { BASE_JWT_OPTION } from '@Auth/constants/base-jwt-options.constant';
+import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
 
 // Common
 import { CoreResponse } from '@Common/dtos/core-response.dto';
@@ -35,7 +35,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: CustomError.WrongUsernameOrPassword,
+    description: CustomError.WrongLoginOrPassword,
     type: LoginResponse,
   })
   async login(
@@ -46,7 +46,7 @@ export class AuthController {
 
     if (
       !result.isSuccess &&
-      result.error === CustomError.WrongUsernameOrPassword
+      result.error === CustomError.WrongLoginOrPassword
     ) {
       res.status(HttpStatus.UNAUTHORIZED);
       return result;
@@ -71,7 +71,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: HttpStatus.CONFLICT,
-    description: 'The user already exists',
+    description: 'The user with given login or email already exists',
     type: RegistrationResponse,
   })
   async registration(
@@ -82,8 +82,8 @@ export class AuthController {
 
     if (
       !result.isSuccess &&
-      (result.error === CustomError.UserWithGivenUsernameAlreadyExist ||
-        result.error === CustomError.UserWithGivenEmailAlreadyExist)
+      (result.error === CustomError.LoginIsAlreadyBusy ||
+        result.error === CustomError.EmailIsAlreadyBusy)
     ) {
       res.status(HttpStatus.CONFLICT);
       return result;
@@ -91,7 +91,7 @@ export class AuthController {
 
     if (
       !result.isSuccess &&
-      result.error === CustomError.UsernameIncompatibleWithPattern
+      result.error === CustomError.LoginIncompatibleWithPattern
     ) {
       res.status(HttpStatus.BAD_REQUEST);
       return result;

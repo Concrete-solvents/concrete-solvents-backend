@@ -148,6 +148,58 @@ class EmailService {
   private static generateCode(): string {
     return uuidv4().split('-')[0];
   }
+
+  public async checkIsEmailAlreadyBusy(email: string): Promise<boolean> {
+    const emailInDB = await this._emailRepository.findOne({
+      where: {
+        value: email,
+        isConfirm: true,
+      },
+    });
+
+    return Boolean(emailInDB);
+  }
+
+  public async updateEmailValueAndSendVerificationCode(
+    emailId: number,
+    newEmailValue: string,
+  ) {
+    const emailInDB = await this._emailRepository.findOne({
+      where: {
+        id: emailId,
+      },
+    });
+
+    emailInDB.value = newEmailValue;
+    emailInDB.isConfirm = false;
+    emailInDB.verificationCode = EmailService.generateCode();
+    emailInDB.restoreCode = null;
+
+    const updatedEmail = await this._emailRepository.save(emailInDB);
+
+    await this._nodeMailerService.sendVerificationCode(
+      updatedEmail.value,
+      updatedEmail.verificationCode,
+    );
+  }
+
+  public async createEmailAndSendVerificationCode(
+    emailValue: string,
+  ): Promise<EmailEntity> {
+    const email = await this._emailRepository.create({
+      value: emailValue,
+      verificationCode: EmailService.generateCode(),
+    });
+
+    const emailInDB = await this._emailRepository.save(email);
+
+    await this._nodeMailerService.sendVerificationCode(
+      emailInDB.value,
+      emailInDB.verificationCode,
+    );
+
+    return emailInDB;
+  }
 }
 
 export { EmailService };
