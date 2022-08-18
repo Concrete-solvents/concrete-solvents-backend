@@ -164,7 +164,7 @@ class UserService {
     return {
       login: user.login,
       username: user.username,
-      email: user.email.value,
+      email: user.email?.value,
       isVerified: user.email.isConfirm,
       avatarUrl: user.avatarUrl,
       id: user.id,

@@ -11,6 +11,7 @@ import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
 import { SocialModule } from './social/social.module';
+import { UserRelationModule } from './user-relation/user-relation.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { SocialModule } from './social/social.module';
     EmailModule,
     NodeMailerModule,
     SocialModule,
+    UserRelationModule,
   ],
 })
 export class AppModule {}

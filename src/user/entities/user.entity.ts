@@ -29,6 +29,9 @@ class UserEntity extends CoreEntity {
   @Column({ nullable: true })
   username: string;
 
+  @Column({ default: 1 })
+  level: number;
+
   @OneToOne(() => EmailEntity, (email) => email.user, { nullable: true })
   @JoinColumn()
   email?: EmailEntity;
@@ -36,7 +39,10 @@ class UserEntity extends CoreEntity {
   @Column()
   password: string;
 
-  @Column({ default: '' })
+  @Column({
+    default:
+      'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
+  })
   avatarUrl: string;
 
   @OneToMany(() => SocialEntity, (social) => social.user)

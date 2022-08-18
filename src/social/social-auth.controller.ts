@@ -1,8 +1,8 @@
 // Libraries
-import { AuthService } from '@Auth/auth.service';
-import { SocialUser } from '@Auth/interfaces/social-user.interface';
-import { Controller, Get, Res, UseGuards } from '@nestjs/common';
+import { Result } from 'oxide.ts';
+import { Controller, Get, HttpStatus, Res, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { CommandBus } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
@@ -13,16 +13,19 @@ import { CustomError } from '@Common/enums/custom-errors';
 
 // Auth
 import { BASE_JWT_OPTION } from '@Auth/constants/base-jwt-options.constant';
-import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
+import { LoginUserWithSocialCommand } from '@Auth/cqrs/commands/login-user-with-social.command';
+import { LoginResponse } from '@Auth/dtos/login-response.dto';
+import { SocialUser } from '@Auth/interfaces/social-user.interface';
 
 // User
 import { User } from '@User/decorators/user.decorator';
+
 
 @Controller('auth/social')
 @ApiTags('Social auth')
 class SocialAuthController {
   constructor(
-    private readonly _authService: AuthService,
+    private readonly _commandBus: CommandBus,
     private readonly _configService: ConfigService,
     private readonly _jwtService: JwtService,
   ) {}
@@ -36,25 +39,30 @@ class SocialAuthController {
   async githubAuthRedirect(
     @User() user: SocialUser,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<RegistrationResponse> {
-    const result = await this._authService.socialLogin('github', user);
+  ) {
+    const command = new LoginUserWithSocialCommand({
+      socialName: 'github',
+      user,
+    });
 
-    if (!result.isSuccess) {
-      return {
-        isSuccess: false,
-        error: CustomError.PermissionError,
-      };
+    const result: Result<LoginResponse, CustomError> =
+      await this._commandBus.execute(command);
+
+    if (result.isOk()) {
+      const unwrappedResult = result.unwrap();
+
+      res.cookie(
+        'jwt',
+        this._jwtService.sign(unwrappedResult.user, { expiresIn: '365d' }),
+        BASE_JWT_OPTION,
+      );
+
+      const clientUrl = this._configService.get<string>('ORIGIN');
+
+      res.redirect(`${clientUrl}/auth/social`);
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
-
-    const clientUrl = this._configService.get<string>('ORIGIN');
-
-    res.redirect(`${clientUrl}/auth/social`);
+    res.status(HttpStatus.UNAUTHORIZED);
   }
 
   @Get('google')
@@ -66,25 +74,30 @@ class SocialAuthController {
   async googleAuthRedirect(
     @User() user: SocialUser,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<RegistrationResponse> {
-    const result = await this._authService.socialLogin('google', user);
+  ) {
+    const command = new LoginUserWithSocialCommand({
+      socialName: 'google',
+      user,
+    });
 
-    if (!result.isSuccess) {
-      return {
-        isSuccess: false,
-        error: CustomError.PermissionError,
-      };
+    const result: Result<LoginResponse, CustomError> =
+      await this._commandBus.execute(command);
+
+    if (result.isOk()) {
+      const unwrappedResult = result.unwrap();
+
+      res.cookie(
+        'jwt',
+        this._jwtService.sign(unwrappedResult.user, { expiresIn: '365d' }),
+        BASE_JWT_OPTION,
+      );
+
+      const clientUrl = this._configService.get<string>('ORIGIN');
+
+      res.redirect(`${clientUrl}/auth/social`);
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
-
-    const clientUrl = this._configService.get<string>('ORIGIN');
-
-    res.redirect(`${clientUrl}/auth/social`);
+    res.status(HttpStatus.UNAUTHORIZED);
   }
 
   @Get('steam')
@@ -96,25 +109,30 @@ class SocialAuthController {
   async steamAuthRedirect(
     @User() user: SocialUser,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<RegistrationResponse> {
-    const result = await this._authService.socialLogin('steam', user);
+  ) {
+    const command = new LoginUserWithSocialCommand({
+      socialName: 'steam',
+      user,
+    });
 
-    if (!result.isSuccess) {
-      return {
-        isSuccess: false,
-        error: CustomError.PermissionError,
-      };
+    const result: Result<LoginResponse, CustomError> =
+      await this._commandBus.execute(command);
+
+    if (result.isOk()) {
+      const unwrappedResult = result.unwrap();
+
+      res.cookie(
+        'jwt',
+        this._jwtService.sign(unwrappedResult.user, { expiresIn: '365d' }),
+        BASE_JWT_OPTION,
+      );
+
+      const clientUrl = this._configService.get<string>('ORIGIN');
+
+      res.redirect(`${clientUrl}/auth/social`);
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
-
-    const clientUrl = this._configService.get<string>('ORIGIN');
-
-    res.redirect(`${clientUrl}/auth/social`);
+    res.status(HttpStatus.UNAUTHORIZED);
   }
 
   @Get('discord')
@@ -126,25 +144,30 @@ class SocialAuthController {
   async discordAuthRedirect(
     @User() user: SocialUser,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<RegistrationResponse> {
-    const result = await this._authService.socialLogin('discord', user);
+  ) {
+    const command = new LoginUserWithSocialCommand({
+      socialName: 'discord',
+      user,
+    });
 
-    if (!result.isSuccess) {
-      return {
-        isSuccess: false,
-        error: CustomError.PermissionError,
-      };
+    const result: Result<LoginResponse, CustomError> =
+      await this._commandBus.execute(command);
+
+    if (result.isOk()) {
+      const unwrappedResult = result.unwrap();
+
+      res.cookie(
+        'jwt',
+        this._jwtService.sign(unwrappedResult.user, { expiresIn: '365d' }),
+        BASE_JWT_OPTION,
+      );
+
+      const clientUrl = this._configService.get<string>('ORIGIN');
+
+      res.redirect(`${clientUrl}/auth/social`);
     }
 
-    res.cookie(
-      'jwt',
-      this._jwtService.sign(result.user, { expiresIn: '365d' }),
-      BASE_JWT_OPTION,
-    );
-
-    const clientUrl = this._configService.get<string>('ORIGIN');
-
-    res.redirect(`${clientUrl}/auth/social`);
+    res.status(HttpStatus.UNAUTHORIZED);
   }
 }
 
