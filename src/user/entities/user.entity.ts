@@ -40,6 +40,11 @@ class UserEntity extends CoreEntity {
   password: string;
 
   @Column({
+    default: '', nullable: true
+  })
+  description: string;
+
+  @Column({
     default:
       'https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg',
   })
