@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   OneToMany,
   OneToOne,
 } from 'typeorm';
@@ -20,6 +21,7 @@ import { SocialEntity } from '@User/entities/social.entity';
 
 // Settings
 import { SettingsEntity } from '@Settings/entity/Settings.entity';
+import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
 
 @Entity('users')
 class UserEntity extends CoreEntity {
@@ -51,6 +53,9 @@ class UserEntity extends CoreEntity {
   @OneToOne(() => SettingsEntity)
   @JoinColumn()
   settings: SettingsEntity;
+
+  @ManyToMany(() => GroupTypeormEntity, (group) => group.users)
+  groups: GroupTypeormEntity[];
 
   @BeforeInsert()
   async hashPassword() {

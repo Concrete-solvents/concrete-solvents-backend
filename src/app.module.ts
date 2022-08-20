@@ -1,5 +1,7 @@
 import { AuthModule } from '@Auth/auth.module';
 import { EmailModule } from '@Email/email.module';
+import { GroupInviteModule } from '@GroupInvite/group-invite.module';
+import { GroupJoinRequestModule } from '@GroupJoinRequest/group-join-request.module';
 import { NodeMailerModule } from '@Mailer/node-mailer.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
@@ -9,9 +11,10 @@ import { UserModule } from '@User/user.module';
 import { getNodeMailerConfig } from '../configs/nodeMailer.config';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
+import { GroupModule } from '@Group/group.module';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
 import { SocialModule } from './social/social.module';
-import { UserRelationModule } from './user-relation/user-relation.module';
+import { UserRelationModule } from '@UserRelation/user-relation.module';
 
 @Module({
   imports: [
@@ -38,6 +41,9 @@ import { UserRelationModule } from './user-relation/user-relation.module';
     NodeMailerModule,
     SocialModule,
     UserRelationModule,
+    GroupModule,
+    GroupInviteModule,
+    GroupJoinRequestModule,
   ],
 })
 export class AppModule {}

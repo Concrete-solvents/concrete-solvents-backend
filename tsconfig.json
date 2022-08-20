@@ -39,6 +39,15 @@
       "@UserRelation/*": [
         "./user-relation/*"
       ],
+      "@Group/*": [
+        "./group/*"
+      ],
+      "@GroupInvite/*": [
+        "./group-invite/*"
+      ],
+      "@GroupJoinRequest/*": [
+        "./group-join-request/*"
+      ]
     }
   }
 }
