@@ -1,6 +1,11 @@
-import { CoreEntity } from '@Common/entities/core.entity';
+// Libraries
 import { Entity, Column } from 'typeorm';
-import { UserRelationType } from '../enum/user-relation-type.enum';
+
+// Common
+import { CoreEntity } from '@Common/entities/core.entity';
+
+// UserRelation
+import { UserRelationType } from '@UserRelation/enum/user-relation-type.enum';
 
 @Entity()
 class UserRelationTypeormEntity extends CoreEntity {

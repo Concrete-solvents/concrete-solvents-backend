@@ -1,6 +1,6 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GetJoinRequestReceivedByGroupQuery } from '@GroupJoinRequest/cqrs/quieries/get-join-request-received-by-group.query';
-import { GetJoinRequestReceivedByGroupResponseDto } from '@GroupJoinRequest/dtos/responses/get-join-request-received-by-group-response.dto';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
 import {
   Controller,
   Get,
@@ -12,10 +12,17 @@ import {
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupJoinRequest
+import { GetJoinRequestReceivedByGroupQuery } from '@GroupJoinRequest/cqrs/quieries/get-join-request-received-by-group.query';
+import { GetJoinRequestReceivedByGroupResponseDto } from '@GroupJoinRequest/dtos/responses/get-join-request-received-by-group-response.dto';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class GetJoinRequestReceivedByGroupHttpController {

@@ -18,6 +18,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@Libs/*": [
+        "./libs/*"
+      ],
       "@Auth/*": [
         "./auth/*"
       ],

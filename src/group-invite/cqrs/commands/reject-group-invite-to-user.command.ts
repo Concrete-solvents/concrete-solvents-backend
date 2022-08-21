@@ -1,5 +1,5 @@
 // Libs
-import { BaseCommand } from '../../../libs/base-classes/base-command';
+import { BaseCommand } from '@Libs/base-classes/base-command';
 
 class RejectGroupInviteToUserCommand extends BaseCommand {
   readonly userId: number;

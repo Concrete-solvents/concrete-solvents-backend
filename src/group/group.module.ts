@@ -1,3 +1,9 @@
+// Libraries
+import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+// Group
 import { AddGroupModeratorApplicationService } from '@Group/application-services/add-group-moderator/add-group-moderator.application-service';
 import { ChangeGroupOwnerApplicationService } from '@Group/application-services/change-group-owner/change-group-owner.application-service';
 import { DeleteGroupApplicationService } from '@Group/application-services/delete-group/delete-group.application-service';
@@ -14,15 +20,16 @@ import { EditGroupHttpController } from '@Group/controllers/edit-group/edit-grou
 import { GetGroupsByUserIdHttpController } from '@Group/controllers/get-groups-by-user-id/get-groups-by-user-id-http-controller/get-groups-by-user-id.http-controller';
 import { KickUserFromGroupHttpController } from '@Group/controllers/kick-user-from-group/kick-user-from-group-http-controller/kick-user-from-group.http-controller';
 import { LeaveFromGroupHttpController } from '@Group/controllers/leave-from-group/leave-from-group-http-controller/leave-from-group.http-controller';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
-import { Module } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from '@User/entities/user.entity';
 import { CreateGroupApplicationService } from './application-services/create-group/create-group.application-service';
 import { CreateGroupHttpController } from './controllers/create-group/create-group-http-controller/create-group.http-controller';
 import { GroupUserPermissionTypeormEntity } from './infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
 import { GroupTypeormEntity } from './infrastructure/database/typeorm-entities/group.typeorm-entity';
+
+// GroupJoinRequest
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+
+// User
+import { UserEntity } from '@User/entities/user.entity';
 
 const httpControllers = [
   CreateGroupHttpController,

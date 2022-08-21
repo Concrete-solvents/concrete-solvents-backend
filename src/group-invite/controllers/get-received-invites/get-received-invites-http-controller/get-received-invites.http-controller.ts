@@ -1,12 +1,19 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GetReceivedInvitesQuery } from '@GroupInvite/cqrs/queries/get-received-invites.query';
-import { GetReceivedInvitesResponseDto } from '@GroupInvite/dtos/responses/get-received-invites-response.dto';
-import { Controller, Get, UseGuards } from '@nestjs/common';
+// Libraries
+import { Result } from 'oxide.ts';
 import { QueryBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupInvite
+import { GetReceivedInvitesQuery } from '@GroupInvite/cqrs/queries/get-received-invites.query';
+import { GetReceivedInvitesResponseDto } from '@GroupInvite/dtos/responses/get-received-invites-response.dto';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class GetReceivedInvitesHttpController {

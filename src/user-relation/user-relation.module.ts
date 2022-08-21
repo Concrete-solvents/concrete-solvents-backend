@@ -3,21 +3,21 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// Entities
+// User
 import { UserEntity } from '@User/entities/user.entity';
-import { ApproveFriendshipRequestService } from './domain/services/approve-friendship-request.service';
-import { CancelFriendshipRequestService } from './domain/services/cancel-friendship-request.service';
-import { DenyFriendshipRequestService } from './domain/services/deny-friendship-request.service';
-import { GetUserRelationsService } from './domain/services/get-user-relations.service';
-import { SendFriendshipRequestService } from './domain/services/send-friendship-request.service';
-import { UserRelationTypeormEntity } from './entities/user-relation.typeorm-entity';
 
-// Controllers
-import { GetUserRelationsHttpController } from './controllers/get-user-relations-controllers/get-user-relations.http-controller';
-import { SendFriendshipRequestHttpController } from './cqrs/commands/send-friendship-request/send-friendship-request.http-controller';
-import { ApproveFriendshipRequestHttpController } from './cqrs/commands/approve-friendship-request/approve-friendship-request.http-controller';
-import { CancelFriendshipRequestHttpController } from './cqrs/commands/cancel-friendship-request/cancel-friendship-request.http-controller';
-import { DenyFriendshipRequestHttpController } from './cqrs/commands/deny-friendship-request/deny-friendship-request.http-controller';
+// UserRelation
+import { ApproveFriendshipRequestApplicationService } from '@UserRelation/application-services/approve-frienship-request/approve-friendship-request.application-service';
+import { CancelFriendshipRequestApplicationService } from '@UserRelation/application-services/cancel-friendship-request/cancel-friendship-request.application-service';
+import { DenyFriendshipRequestApplicationService } from '@UserRelation/application-services/deny-friendship-request/deny-friendship-request.application-service';
+import { GetUserRelationsApplicationService } from '@UserRelation/application-services/get-user-relations/get-user-relations.application-service';
+import { SendFriendshipRequestApplicationService } from '@UserRelation/application-services/send-friendship-request/send-friendship-request.application-service';
+import { UserRelationTypeormEntity } from '@UserRelation/entities/user-relation.typeorm-entity';
+import { GetUserRelationsHttpController } from '@UserRelation/controllers/get-user-relations-controllers/get-user-relations-http-controller/get-user-relations.http-controller';
+import { SendFriendshipRequestHttpController } from '@UserRelation/controllers/send-friendship-request/send-friendship-request-http-controller/send-friendship-request.http-controller';
+import { ApproveFriendshipRequestHttpController } from '@UserRelation/controllers/approve-friendship-request/approve-friendship-request-http-controller/approve-friendship-request.http-controller';
+import { CancelFriendshipRequestHttpController } from '@UserRelation/controllers/cancel-friendship-request/cancel-friendship-request-http-controller/cancel-friendship-request.http-controller';
+import { DenyFriendshipRequestHttpController } from '@UserRelation/controllers/deny-friendship-request/deny-friendship-request-http-controller/deny-friendship-request.http-controller';
 
 const httpControllers = [
   GetUserRelationsHttpController,
@@ -27,13 +27,12 @@ const httpControllers = [
   DenyFriendshipRequestHttpController,
 ];
 
-const queryHandlers = [GetUserRelationsService];
-
-const commandHandlers = [
-  SendFriendshipRequestService,
-  DenyFriendshipRequestService,
-  ApproveFriendshipRequestService,
-  CancelFriendshipRequestService,
+const applicationServices = [
+  GetUserRelationsApplicationService,
+  SendFriendshipRequestApplicationService,
+  DenyFriendshipRequestApplicationService,
+  ApproveFriendshipRequestApplicationService,
+  CancelFriendshipRequestApplicationService,
 ];
 
 @Module({
@@ -41,7 +40,7 @@ const commandHandlers = [
     TypeOrmModule.forFeature([UserRelationTypeormEntity, UserEntity]),
     CqrsModule,
   ],
-  providers: [...queryHandlers, ...commandHandlers],
+  providers: [...applicationServices],
   controllers: [...httpControllers],
 })
 class UserRelationModule {}

@@ -1,27 +1,34 @@
 // Libraries
-import { EmailModule } from '@Email/email.module';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Email
 import { EmailEntity } from '@Email/entities/email.entity';
+
+// Settings
 import { SettingsEntity } from '@Settings/entity/Settings.entity';
-import { GetUsersPublicInfoByIdsService } from '@User/domain/services/get-users-public-info-by-ids.service';
 
 // User
 import { UserEntity } from '@User/entities/user.entity';
-import { UserController } from '@User/user.controller';
-import { UserService } from '@User/user.service';
+import { GetMeApplicationService } from '@User/application-services/get-me/get-me.application-service';
+import { UpdateUserApplicationService } from '@User/application-services/update-user/update-user.application-service';
+import { GetMeHttpController } from '@User/controllers/get-me/get-me-http-controller/get-me.http-controller';
+import { UpdateUserHttpController } from '@User/controllers/update-user/update-user-http-controller/update-user.http-controller';
+
+const httpControllers = [GetMeHttpController, UpdateUserHttpController];
+
+const applicationServices = [
+  GetMeApplicationService,
+  UpdateUserApplicationService,
+];
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, EmailEntity, SettingsEntity]),
-    EmailModule,
     CqrsModule,
   ],
-  providers: [UserService, GetUsersPublicInfoByIdsService],
-  controllers: [UserController],
-  exports: [UserService],
+  providers: [...applicationServices],
+  controllers: [...httpControllers],
 })
 export class UserModule {}

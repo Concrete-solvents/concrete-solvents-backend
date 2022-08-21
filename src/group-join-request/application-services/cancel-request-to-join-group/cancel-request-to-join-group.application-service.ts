@@ -1,12 +1,19 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { CancelRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/cancel-request-to-join-group.command';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
-import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
-import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
+// Libraries
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupJoinRequest
+import { CancelRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/cancel-request-to-join-group.command';
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+
+// Group
+import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
+import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
 
 @CommandHandler(CancelRequestToJoinGroupCommand)
 class CancelRequestToJoinGroupApplicationService implements ICommandHandler {

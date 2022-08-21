@@ -1,5 +1,5 @@
 // Libs
-import { BaseCommand } from '../../../libs/base-classes/base-command';
+import { BaseCommand } from '@Libs/base-classes/base-command';
 
 class LoginCommand extends BaseCommand {
   readonly login: string;

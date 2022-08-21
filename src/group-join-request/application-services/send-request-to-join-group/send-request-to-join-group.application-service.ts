@@ -1,13 +1,22 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { SendRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/send-request-to-join-group.command';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
-import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
-import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '@User/entities/user.entity';
+// Libraries
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { InjectRepository } from '@nestjs/typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupJoinRequest
+import { SendRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/send-request-to-join-group.command';
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+
+// Group
+import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
+import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
+
+// User
+import { UserEntity } from '@User/entities/user.entity';
 
 @CommandHandler(SendRequestToJoinGroupCommand)
 class SendRequestToJoinGroupApplicationService implements ICommandHandler {
