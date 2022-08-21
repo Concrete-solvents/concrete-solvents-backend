@@ -1,11 +1,18 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GetGroupsByUserIdQuery } from '@Group/cqrs/queries/get-groups-by-user-id.query';
-import { GetGroupsByUserIdResponseDto } from '@Group/dtos/responses/get-groups-by-user-id-response.dto';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '@User/entities/user.entity';
+// Libraries
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { InjectRepository } from '@nestjs/typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { GetGroupsByUserIdQuery } from '@Group/cqrs/queries/get-groups-by-user-id.query';
+import { GetGroupsByUserIdResponseDto } from '@Group/dtos/responses/get-groups-by-user-id-response.dto';
+
+// User
+import { UserEntity } from '@User/entities/user.entity';
 
 @QueryHandler(GetGroupsByUserIdQuery)
 class GetGroupsByUserIdApplicationService implements IQueryHandler {

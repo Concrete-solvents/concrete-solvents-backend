@@ -1,5 +1,8 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { DeleteGroupCommand } from '@Group/cqrs/commands/delete-group.command';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
+import { CommandBus } from '@nestjs/cqrs';
+import { AuthGuard } from '@nestjs/passport';
 import {
   Controller,
   Delete,
@@ -9,12 +12,16 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { DeleteGroupCommand } from '@Group/cqrs/commands/delete-group.command';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class DeleteGroupHttpController {

@@ -1,6 +1,4 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { DemoteGroupModeratorCommand } from '@Group/cqrs/commands/demote-group-moderator.command';
-import { DemoteGroupModeratorRequestDto } from '@Group/dtos/requests/demote-group-moderator-request.dto';
+// Libraries
 import {
   Body,
   Controller,
@@ -13,10 +11,19 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '@User/decorators/user.decorator';
-import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 import { Response } from 'express';
 import { Result } from 'oxide.ts';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { DemoteGroupModeratorCommand } from '@Group/cqrs/commands/demote-group-moderator.command';
+import { DemoteGroupModeratorRequestDto } from '@Group/dtos/requests/demote-group-moderator-request.dto';
+
+// User
+import { User } from '@User/decorators/user.decorator';
+import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 
 @Controller()
 class DemoteGroupModeratorHttpController {

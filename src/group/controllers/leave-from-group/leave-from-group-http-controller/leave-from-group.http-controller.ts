@@ -1,5 +1,8 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { LeaveFromGroupCommand } from '@Group/cqrs/commands/leave-from-group.command';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
+import { CommandBus } from '@nestjs/cqrs';
+import { AuthGuard } from '@nestjs/passport';
 import {
   Controller,
   HttpStatus,
@@ -9,12 +12,16 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { LeaveFromGroupCommand } from '@Group/cqrs/commands/leave-from-group.command';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class LeaveFromGroupHttpController {
