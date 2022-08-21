@@ -1,10 +1,10 @@
 // Libraries
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-class SendRestoreCodeRequestDto {
+class SendAccountRestoreCodeRequestDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
 }
 
-export { SendRestoreCodeRequestDto };
+export { SendAccountRestoreCodeRequestDto };
