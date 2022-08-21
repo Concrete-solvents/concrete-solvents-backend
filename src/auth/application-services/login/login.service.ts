@@ -1,7 +1,7 @@
 // Libraries
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // Common
@@ -10,15 +10,15 @@ import { CustomError } from '@Common/enums/custom-errors';
 // Auth
 import { LoginCommand } from '@Auth/cqrs/commands/login.command';
 import { LoginResponse } from '@Auth/dtos/login-response.dto';
+import { CheckIsPasswordCorrectCommand } from '@Auth/cqrs/commands/check-is-password-correct.command';
 
 // User
 import { UserEntity } from '@User/entities/user.entity';
-import { UserService } from '@User/user.service';
 
 @CommandHandler(LoginCommand)
 class LoginService implements ICommandHandler {
   constructor(
-    private readonly _userService: UserService,
+    private readonly _commandBus: CommandBus,
     @InjectRepository(UserEntity)
     private readonly _userRepository: Repository<UserEntity>,
   ) {}
@@ -39,9 +39,13 @@ class LoginService implements ICommandHandler {
       return Err(CustomError.UserDoesNotExist);
     }
 
-    const isPasswordCorrect = await this._userService.checkPassword(
-      command.password,
-      userInDB.id,
+    const checkIsUserPasswordCommand = new CheckIsPasswordCorrectCommand({
+      userId: userInDB.id,
+      tryPassword: command.password,
+    });
+
+    const isPasswordCorrect: boolean = await this._commandBus.execute(
+      checkIsUserPasswordCommand,
     );
 
     if (!isPasswordCorrect) {

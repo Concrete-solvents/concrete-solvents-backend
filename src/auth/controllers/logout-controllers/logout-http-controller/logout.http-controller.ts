@@ -10,7 +10,7 @@ import { BASE_JWT_OPTION } from '@Auth/constants/base-jwt-options.constant';
 
 @Controller()
 class LogoutHttpController {
-  @Post('logout')
+  @Post('auth/logout')
   async logout(
     @Res({ passthrough: true }) res: Response,
   ): Promise<CoreResponse> {

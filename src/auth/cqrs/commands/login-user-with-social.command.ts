@@ -1,5 +1,5 @@
 // Libs
-import { BaseCommand } from '../../../libs/base-classes/base-command';
+import { BaseCommand } from '@Libs/base-classes/base-command';
 
 // Auth
 import { SocialUser } from '@Auth/interfaces/social-user.interface';

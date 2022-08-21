@@ -1,7 +1,7 @@
 // Libraries
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // Auth
@@ -12,7 +12,8 @@ import { RegistrationResponse } from '@Auth/dtos/registration-response.dto';
 import { CustomError } from '@Common/enums/custom-errors';
 
 // Email
-import { EmailService } from '@Email/email.service';
+import { CreateEmailCommand } from '@Email/cqrs/commands/create-email.command';
+import { EmailEntity } from '@Email/entities/email.entity';
 
 // Settings
 import { SettingsEntity } from '@Settings/entity/Settings.entity';
@@ -23,7 +24,7 @@ import { UserEntity } from '@User/entities/user.entity';
 @CommandHandler(RegistrationCommand)
 class RegistrationService implements ICommandHandler {
   constructor(
-    private readonly _emailService: EmailService,
+    private readonly _commandBus: CommandBus,
     @InjectRepository(UserEntity)
     private readonly _userRepository: Repository<UserEntity>,
     @InjectRepository(SettingsEntity)
@@ -49,17 +50,18 @@ class RegistrationService implements ICommandHandler {
       return Err(CustomError.LoginIncompatibleWithPattern);
     }
 
-    const isEmailAlreadyBusy = await this._emailService.checkIsEmailAlreadyBusy(
-      command.email,
-    );
+    const createEmailCommand = new CreateEmailCommand({
+      emailValue: command.email,
+    });
 
-    if (isEmailAlreadyBusy) {
-      return Err(CustomError.EmailIsAlreadyBusy);
+    const resultOfCreatingNewEmail: Result<EmailEntity, CustomError> =
+      await this._commandBus.execute(createEmailCommand);
+
+    if (resultOfCreatingNewEmail.isErr()) {
+      return resultOfCreatingNewEmail;
     }
 
-    const email = await this._emailService.createEmailAndSendVerificationCode(
-      command.email,
-    );
+    const newEmail = resultOfCreatingNewEmail.unwrap();
 
     const newSettings = await this._settingsRepository.create({
       language: command.language,
@@ -71,7 +73,7 @@ class RegistrationService implements ICommandHandler {
       login: command.login,
       username: command.login,
       password: command.password,
-      email: email,
+      email: newEmail,
       settings: newSettingsInDB,
     });
 
@@ -91,8 +93,8 @@ class RegistrationService implements ICommandHandler {
         login: userInDB.login,
         username: userInDB.username,
         id: userInDB.id,
-        email: email.value,
-        isVerified: email.isConfirm,
+        email: newEmail.value,
+        isVerified: newEmail.isConfirm,
         avatarUrl: userInDB.avatarUrl,
       },
     });
