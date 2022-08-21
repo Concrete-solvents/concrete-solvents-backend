@@ -1,13 +1,16 @@
+// Libraries
+import { Ok, Result } from 'oxide.ts';
+import { In, Repository } from 'typeorm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
+
+// User
 import { GetUsersPublicInfoByIdsQuery } from '@User/cqrs/queries/get-users-public-info-by-ids.query';
 import { GetUsersPublicInfoByIdsResponseDto } from '@User/dtos/get-users-public-info-by-ids.response.dto';
 import { UserEntity } from '@User/entities/user.entity';
-import { Ok, Result } from 'oxide.ts';
-import { In, Repository } from 'typeorm';
 
 @QueryHandler(GetUsersPublicInfoByIdsQuery)
-class GetUsersPublicInfoByIdsService implements IQueryHandler {
+class GetUsersPublicInfoByIdsApplicationService implements IQueryHandler {
   constructor(
     @InjectRepository(UserEntity)
     private readonly _userRepository: Repository<UserEntity>,
@@ -38,4 +41,4 @@ class GetUsersPublicInfoByIdsService implements IQueryHandler {
   }
 }
 
-export { GetUsersPublicInfoByIdsService };
+export { GetUsersPublicInfoByIdsApplicationService };

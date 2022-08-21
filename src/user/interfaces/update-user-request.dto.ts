@@ -1,18 +1,21 @@
+// Libraries
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+
+// User
 import {
   MAX_PASSWORD_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   MIN_USERNAME_LENGTH,
 } from '@User/constants/user-minmax-lengths.constant';
-import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 class UpdateUserRequestDto {
-  @IsString()
-  @IsOptional()
-  @MinLength(MIN_USERNAME_LENGTH)
-  @MaxLength(MAX_USERNAME_LENGTH)
-  login?: string;
-
   @IsString()
   @IsOptional()
   @MinLength(MIN_USERNAME_LENGTH)
