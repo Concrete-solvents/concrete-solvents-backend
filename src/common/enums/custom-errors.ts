@@ -20,4 +20,5 @@ export enum CustomError {
   JoinRequestDoesNotExist = 'The join request does not exist',
   RequestToJoinGroupAlreadyExist = 'the request to join the group is already exist',
   GroupNameAlreadyBusy = 'The group name is already busy',
+  EmailDoesNotExist = 'The email does not exist',
 }
