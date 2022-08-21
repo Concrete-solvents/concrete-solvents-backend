@@ -2,7 +2,7 @@ import { AuthModule } from '@Auth/auth.module';
 import { EmailModule } from '@Email/email.module';
 import { GroupInviteModule } from '@GroupInvite/group-invite.module';
 import { GroupJoinRequestModule } from '@GroupJoinRequest/group-join-request.module';
-import { NodeMailerModule } from '@Mailer/node-mailer.controller';
+import { NodeMailerModule } from '@Mailer/node-mailer.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
