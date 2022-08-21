@@ -1,5 +1,6 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { SendRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/send-request-to-join-group.command';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
 import {
   Controller,
   HttpStatus,
@@ -11,10 +12,16 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupJoinRequest
+import { SendRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/send-request-to-join-group.command';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class SendRequestToJoinGroupHttpController {

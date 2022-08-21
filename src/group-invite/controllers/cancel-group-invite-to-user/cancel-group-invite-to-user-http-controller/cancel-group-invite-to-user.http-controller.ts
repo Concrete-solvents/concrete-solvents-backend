@@ -1,6 +1,5 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { CancelGroupInviteToUserCommand } from '@GroupInvite/cqrs/commands/cancel-group-invite-to-user.command';
-import { CancelGroupInviteToUserRequestDto } from '@GroupInvite/dtos/requests/cancel-group-invite-to-user-request.dto';
+// Libraries
+import { Result } from 'oxide.ts';
 import {
   Body,
   Controller,
@@ -12,9 +11,17 @@ import {
 import { Response } from 'express';
 import { CommandBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupInvite
+import { CancelGroupInviteToUserCommand } from '@GroupInvite/cqrs/commands/cancel-group-invite-to-user.command';
+import { CancelGroupInviteToUserRequestDto } from '@GroupInvite/dtos/requests/cancel-group-invite-to-user-request.dto';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class CancelGroupInviteToUserHttpController {

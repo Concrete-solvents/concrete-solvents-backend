@@ -1,12 +1,19 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { RejectRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/reject-request-to-join-group.command';
-import { GroupUserPermission } from '@Group/enums/group-user-permission';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
-import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
+// Libraries
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupJoinRequest
+import { RejectRequestToJoinGroupCommand } from '@GroupJoinRequest/cqrs/commands/reject-request-to-join-group.command';
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+
+// Group
+import { GroupUserPermission } from '@Group/enums/group-user-permission';
+import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
 
 @CommandHandler(RejectRequestToJoinGroupCommand)
 class RejectRequestToJoinGroupApplicationService implements ICommandHandler {

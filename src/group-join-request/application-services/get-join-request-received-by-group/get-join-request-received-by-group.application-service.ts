@@ -1,13 +1,20 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GroupUserPermission } from '@Group/enums/group-user-permission';
-import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
-import { GetJoinRequestReceivedByGroupQuery } from '@GroupJoinRequest/cqrs/quieries/get-join-request-received-by-group.query';
-import { GetJoinRequestReceivedByGroupResponseDto } from '@GroupJoinRequest/dtos/responses/get-join-request-received-by-group-response.dto';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+// Libraries
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { GroupUserPermission } from '@Group/enums/group-user-permission';
+import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
+
+// GroupJoinRequest
+import { GetJoinRequestReceivedByGroupQuery } from '@GroupJoinRequest/cqrs/quieries/get-join-request-received-by-group.query';
+import { GetJoinRequestReceivedByGroupResponseDto } from '@GroupJoinRequest/dtos/responses/get-join-request-received-by-group-response.dto';
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
 
 @QueryHandler(GetJoinRequestReceivedByGroupQuery)
 class GetJoinRequestReceivedByGroupApplicationService implements IQueryHandler {

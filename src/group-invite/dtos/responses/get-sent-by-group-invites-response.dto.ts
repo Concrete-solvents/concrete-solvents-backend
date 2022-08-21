@@ -1,3 +1,4 @@
+// User
 import { UserPublicInfo } from '@User/interfaces/user-public-info.interface';
 
 interface Invite {

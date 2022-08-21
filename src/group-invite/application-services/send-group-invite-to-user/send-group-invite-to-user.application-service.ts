@@ -1,12 +1,21 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { SendGroupInviteToUserCommand } from '@GroupInvite/cqrs/commands/send-group-invite-to-user.command';
-import { GroupInviteTypeormEntity } from '@GroupInvite/infrastructure/database/typeorm-entities/group-invite.typeorm-entity';
-import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '@User/entities/user.entity';
+// Libraries
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { InjectRepository } from '@nestjs/typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupInvite
+import { SendGroupInviteToUserCommand } from '@GroupInvite/cqrs/commands/send-group-invite-to-user.command';
+import { GroupInviteTypeormEntity } from '@GroupInvite/infrastructure/database/typeorm-entities/group-invite.typeorm-entity';
+
+// Group
+import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
+
+// User
+import { UserEntity } from '@User/entities/user.entity';
 
 @CommandHandler(SendGroupInviteToUserCommand)
 class SendGroupInviteToUserApplicationService implements ICommandHandler {
