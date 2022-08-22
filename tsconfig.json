@@ -47,6 +47,9 @@
       ],
       "@GroupJoinRequest/*": [
         "./group-join-request/*"
+      ],
+      "@FileUploader/*": [
+        "./fileUploader/*"
       ]
     }
   }

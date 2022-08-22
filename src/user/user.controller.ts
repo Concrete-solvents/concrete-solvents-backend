@@ -9,6 +9,7 @@ import { User } from '@User/decorators/user.decorator';
 import { UpdateUserRequestDto } from '@User/interfaces/update-user-request.dto';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 import { UserService } from '@User/user.service';
+import { UpdateUserInfoDto } from "@User/interfaces/update-user-info.dto";
 
 @Controller('user')
 @ApiTags('User')
@@ -32,6 +33,17 @@ class UserController {
     @Body() updateUserDto: UpdateUserRequestDto,
   ): Promise<{ error: CustomError; isSuccess: boolean } | { error: CustomError; isSuccess: boolean } | { error: CustomError; isSuccess: boolean } | { user: { avatarUrl: string; isVerified: boolean; login: string; email: string; username: string }; isSuccess: boolean }> {
     return this._userService.updateUser(user, updateUserDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put('updateUserInfo')
+  @ApiCookieAuth()
+  @ApiOperation({ summary: 'Update user info' })
+  updateUserInfo(
+    @User() user: UserBaseResponse,
+    @Body() updateUserInfoDto: UpdateUserInfoDto,
+  ): Promise<{ error: CustomError; isSuccess: boolean} | { avatarUrl: string; isVerified: boolean; login: string; email: string; username: string, description: string }> {
+    return this._userService.updateUserInfo(user, updateUserInfoDto);
   }
 }
 

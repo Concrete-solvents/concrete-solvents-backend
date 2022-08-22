@@ -5,6 +5,7 @@ interface UserBaseResponse {
   isVerified: boolean;
   id: number;
   avatarUrl: string;
+  description: string;
 }
 
 export type { UserBaseResponse };

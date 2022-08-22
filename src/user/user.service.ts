@@ -11,6 +11,7 @@ import { UserEntity } from '@User/entities/user.entity';
 import { UpdateUserRequestDto } from '@User/interfaces/update-user-request.dto';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 import { Repository } from 'typeorm';
+import {UpdateUserInfoDto} from "@User/interfaces/update-user-info.dto";
 
 @Injectable()
 class UserService {
@@ -21,6 +22,52 @@ class UserService {
     private readonly _emailRepository: Repository<EmailEntity>,
     private readonly _emailService: EmailService,
   ) {}
+
+  async updateUserInfo(
+    user: UserBaseResponse,
+    updateUserInfoDto: UpdateUserInfoDto
+  ) {
+    const userInDB = await this._userRepository.findOne({
+      where: {
+        id: user.id
+      }
+    })
+    if (!userInDB) {
+      return {
+        isSuccess: false,
+        error: CustomError.UserDoesNotExist
+      }
+    }
+    if (updateUserInfoDto?.username) {
+      userInDB.username = updateUserInfoDto.username
+    }
+    if (updateUserInfoDto?.avatarUrl) {
+      userInDB.avatarUrl = updateUserInfoDto.avatarUrl
+    }
+    if (updateUserInfoDto?.description) {
+      userInDB.description = updateUserInfoDto.description
+    }
+    await this._userRepository.save(userInDB);
+
+    const updatedUser = await this._userRepository.findOne({
+      where: {
+        id: user.id,
+      },
+      relations: {
+        email: true,
+      },
+    });
+
+    return {
+        login: updatedUser.login,
+        username: updatedUser.username,
+        avatarUrl: updatedUser.avatarUrl,
+        email: updatedUser.email.value,
+        isVerified: updatedUser.email.isConfirm,
+        description: updatedUser.description,
+    };
+  }
+
 
   async updateUser(
     user: UserBaseResponse,
@@ -168,6 +215,7 @@ class UserService {
       isVerified: user.email?.isConfirm,
       avatarUrl: user.avatarUrl,
       id: user.id,
+      description: user.description
     };
   }
 }
