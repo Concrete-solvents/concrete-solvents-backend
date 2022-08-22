@@ -1,12 +1,17 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { LeaveFromGroupCommand } from '@Group/cqrs/commands/leave-from-group.command';
-import { GroupUserPermission } from '@Group/enums/group-user-permission';
-import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
-import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
+// Libraries
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok, Result } from 'oxide.ts';
 import { Repository } from 'typeorm';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { LeaveFromGroupCommand } from '@Group/cqrs/commands/leave-from-group.command';
+import { GroupUserPermission } from '@Group/enums/group-user-permission';
+import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
+import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
 
 @CommandHandler(LeaveFromGroupCommand)
 class LeaveFromGroupApplicationService implements ICommandHandler {

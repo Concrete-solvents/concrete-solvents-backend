@@ -1,13 +1,20 @@
+// Libraries
+import { Err, Ok, Result } from 'oxide.ts';
+import { Repository } from 'typeorm';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { InjectRepository } from '@nestjs/typeorm';
+
+// Common
 import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
 import { KickUserFromGroupCommand } from '@Group/cqrs/commands/kick-user-from-group.command';
 import { GroupUserPermission } from '@Group/enums/group-user-permission';
 import { GroupUserPermissionTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group-user-permission.typeorm-entity';
 import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entities/group.typeorm-entity';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
+
+// User
 import { UserEntity } from '@User/entities/user.entity';
-import { Err, Ok, Result } from 'oxide.ts';
-import { Repository } from 'typeorm';
 
 @CommandHandler(KickUserFromGroupCommand)
 class KickUserFromGroupApplicationService implements ICommandHandler {

@@ -1,8 +1,19 @@
-import { CoreEntity } from '@Common/entities/core.entity';
-import { GroupInviteTypeormEntity } from '@GroupInvite/infrastructure/database/typeorm-entities/group-invite.typeorm-entity';
-import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest//infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
-import { UserEntity } from '@User/entities/user.entity';
+// Libraries
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+
+// Common
+import { CoreEntity } from '@Common/entities/core.entity';
+
+// GroupInvite
+import { GroupInviteTypeormEntity } from '@GroupInvite/infrastructure/database/typeorm-entities/group-invite.typeorm-entity';
+
+// groupJoinRequest
+import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
+
+// User
+import { UserEntity } from '@User/entities/user.entity';
+
+// Group
 import { GroupUserPermissionTypeormEntity } from './group-user-permission.typeorm-entity';
 
 @Entity()

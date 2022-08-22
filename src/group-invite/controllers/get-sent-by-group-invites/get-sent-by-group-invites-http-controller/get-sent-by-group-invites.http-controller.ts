@@ -1,5 +1,6 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GetSentByGroupInvitesQuery } from '@GroupInvite/cqrs/queries/get-sent-by-group-invites.query';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
 import {
   Controller,
   Get,
@@ -11,10 +12,16 @@ import {
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// GroupInvite
+import { GetSentByGroupInvitesQuery } from '@GroupInvite/cqrs/queries/get-sent-by-group-invites.query';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class GetSentByGroupInvitesHttpController {

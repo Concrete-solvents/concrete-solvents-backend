@@ -1,5 +1,10 @@
-import { CoreEntity } from '@Common/entities/core.entity';
+// Libraries
 import { Column, Entity, ManyToOne } from 'typeorm';
+
+// Common
+import { CoreEntity } from '@Common/entities/core.entity';
+
+// Group
 import { GroupUserPermission } from '@Group/enums/group-user-permission';
 import { GroupTypeormEntity } from './group.typeorm-entity';
 

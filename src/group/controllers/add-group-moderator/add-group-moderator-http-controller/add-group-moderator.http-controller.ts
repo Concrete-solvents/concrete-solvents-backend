@@ -1,6 +1,6 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { AddGroupModeratorCommand } from '@Group/cqrs/commands/add-group-moderator.command';
-import { AddGroupModeratorRequestDto } from '@Group/dtos/requests/add-group-moderator-request.dto';
+// Libraries
+import { Response } from 'express';
+import { Result } from 'oxide.ts';
 import {
   Body,
   Controller,
@@ -13,10 +13,17 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { AddGroupModeratorCommand } from '@Group/cqrs/commands/add-group-moderator.command';
+import { AddGroupModeratorRequestDto } from '@Group/dtos/requests/add-group-moderator-request.dto';
+
+// User
 import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
-import { Response } from 'express';
-import { Result } from 'oxide.ts';
 
 @Controller()
 class AddGroupModeratorHttpController {

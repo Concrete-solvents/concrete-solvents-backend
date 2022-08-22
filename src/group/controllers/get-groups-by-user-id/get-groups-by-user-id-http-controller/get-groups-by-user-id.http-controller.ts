@@ -1,10 +1,15 @@
-import { CustomError } from '@Common/enums/custom-errors';
-import { GetGroupsByUserIdQuery } from '@Group/cqrs/queries/get-groups-by-user-id.query';
-import { GetGroupsByUserIdResponseDto } from '@Group/dtos/responses/get-groups-by-user-id-response.dto';
+// Libraries
 import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Response } from 'express';
 import { Result } from 'oxide.ts';
+
+// Common
+import { CustomError } from '@Common/enums/custom-errors';
+
+// Group
+import { GetGroupsByUserIdQuery } from '@Group/cqrs/queries/get-groups-by-user-id.query';
+import { GetGroupsByUserIdResponseDto } from '@Group/dtos/responses/get-groups-by-user-id-response.dto';
 
 @Controller()
 class GetGroupsByUserIdHttpController {
