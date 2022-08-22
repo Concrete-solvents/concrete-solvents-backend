@@ -96,6 +96,7 @@ class RegistrationService implements ICommandHandler {
         email: newEmail.value,
         isVerified: newEmail.isConfirm,
         avatarUrl: userInDB.avatarUrl,
+        description: userInDB.description
       },
     });
   }
