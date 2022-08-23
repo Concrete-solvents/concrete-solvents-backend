@@ -12,6 +12,7 @@ import { getNodeMailerConfig } from '../configs/nodeMailer.config';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
 import { GroupModule } from '@Group/group.module';
+import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
 import { SocialModule } from './social/social.module';
 import { UserRelationModule } from '@UserRelation/user-relation.module';
@@ -44,6 +45,7 @@ import { UserRelationModule } from '@UserRelation/user-relation.module';
     GroupModule,
     GroupInviteModule,
     GroupJoinRequestModule,
+    FileUploaderModule,
   ],
 })
 export class AppModule {}

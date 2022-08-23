@@ -42,7 +42,7 @@ class UserEntity extends CoreEntity {
   password: string;
 
   @Column({
-    default: '', nullable: true
+    default: '',
   })
   description: string;
 
