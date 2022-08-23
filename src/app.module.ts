@@ -12,12 +12,10 @@ import { getNodeMailerConfig } from '../configs/nodeMailer.config';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
 import { GroupModule } from '@Group/group.module';
-import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
 import { SocialModule } from './social/social.module';
 import { UserRelationModule } from '@UserRelation/user-relation.module';
-import { FileUploadModule } from "@FileUploader/file-uploader.module";
-import {MulterModule} from "@nestjs/platform-express";
+import { FileUploaderModule } from '@FileUploader/file-uploader.module';
 
 @Module({
   imports: [
@@ -37,9 +35,6 @@ import {MulterModule} from "@nestjs/platform-express";
       inject: [ConfigService],
       useFactory: getNodeMailerConfig,
     }),
-    MulterModule.register({
-      dest: './uploads'
-    }),
     JwtLocalModule,
     UserModule,
     AuthModule,
@@ -48,10 +43,9 @@ import {MulterModule} from "@nestjs/platform-express";
     SocialModule,
     UserRelationModule,
     GroupModule,
-    FileUploadModule,
+    FileUploaderModule,
     GroupInviteModule,
     GroupJoinRequestModule,
-    FileUploaderModule,
   ],
 })
 export class AppModule {}

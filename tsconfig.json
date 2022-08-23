@@ -52,7 +52,7 @@
         "./group-join-request/*"
       ],
       "@FileUploader/*": [
-        "./fileUploader/*"
+        "./file-uploader/*"
       ]
     }
   }

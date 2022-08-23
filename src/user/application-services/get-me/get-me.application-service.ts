@@ -26,6 +26,7 @@ class GetMeApplicationService implements IQueryHandler {
     });
 
     return {
+      description: user.description,
       login: user.login,
       username: user.username,
       email: user.email?.value,

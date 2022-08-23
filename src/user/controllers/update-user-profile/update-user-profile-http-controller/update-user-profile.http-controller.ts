@@ -1,5 +1,5 @@
 // Libraries
-import { Body, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Put, UseGuards } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
@@ -14,6 +14,7 @@ import { UpdateUserInfoRequestDto } from '@User/dtos/update-user-info-request.dt
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 import { UpdateUserInfoCommand } from '@User/cqrs/commands/update-user-info.command';
 
+@Controller()
 class UpdateUserProfileHttpController {
   constructor(private readonly _commandBus: CommandBus) {}
 
