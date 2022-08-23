@@ -1,4 +1,5 @@
 // Libraries
+import { CheckIsPasswordCorrectApplicationService } from '@Auth/application-services/check-is-password-correct/check-is-password-correct.application.service';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PassportModule } from '@nestjs/passport';
@@ -45,6 +46,7 @@ const commandHandlers = [
   LoginService,
   RegistrationService,
   CreateUserWithSocialService,
+  CheckIsPasswordCorrectApplicationService,
 ];
 
 @Module({
