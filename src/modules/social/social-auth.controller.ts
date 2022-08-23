@@ -20,7 +20,6 @@ import { SocialUser } from '@Auth/interfaces/social-user.interface';
 // User
 import { User } from '@User/decorators/user.decorator';
 
-
 @Controller('auth/social')
 @ApiTags('Social auth')
 class SocialAuthController {

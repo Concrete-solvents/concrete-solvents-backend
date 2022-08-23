@@ -22,37 +22,43 @@
         "./libs/*"
       ],
       "@Auth/*": [
-        "./auth/*"
+        "./modules/auth/*"
       ],
       "@Common/*": [
         "./common/*"
       ],
       "@User/*": [
-        "./user/*"
+        "./modules/user/*"
       ],
       "@Email/*": [
-        "./email/*"
+        "./modules/email/*"
       ],
       "@Mailer/*": [
-        "./nodeMailer/*"
+        "./modules/nodeMailer/*"
       ],
       "@Settings/*": [
-        "./settings/*"
+        "./modules/settings/*"
       ],
       "@UserRelation/*": [
-        "./user-relation/*"
+        "./modules/user-relation/*"
       ],
       "@Group/*": [
-        "./group/*"
+        "./modules/group/*"
       ],
       "@GroupInvite/*": [
-        "./group-invite/*"
+        "./modules/group-invite/*"
       ],
       "@GroupJoinRequest/*": [
-        "./group-join-request/*"
+        "./modules/group-join-request/*"
       ],
       "@FileUploader/*": [
-        "./file-uploader/*"
+        "./modules/file-uploader/*"
+      ],
+      "@Social/*": [
+        "./modules/social/*"
+      ],
+      "@JwtLocal/*": [
+        "./modules/jwt-local/*"
       ]
     }
   }

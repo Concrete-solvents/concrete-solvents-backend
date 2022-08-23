@@ -1,5 +1,8 @@
-import {IsOptional, IsString, MaxLength, MinLength} from "class-validator";
-import {MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH} from "@User/constants/user-minmax-lengths.constant";
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  MAX_USERNAME_LENGTH,
+  MIN_USERNAME_LENGTH,
+} from '@User/constants/user-minmax-lengths.constant';
 
 class UpdateUserInfoDto {
   @IsString()
@@ -17,4 +20,4 @@ class UpdateUserInfoDto {
   description?: string;
 }
 
-export {UpdateUserInfoDto};
+export { UpdateUserInfoDto };

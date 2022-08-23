@@ -16,7 +16,7 @@ import { User } from '@User/decorators/user.decorator';
 import { UserBaseResponse } from '@User/interfaces/user-base-response.interface';
 
 @Controller()
-class GetRequestsToJoinGroupSentByUserHttpController {
+class GetRequestsToJoinGroupHttpController {
   constructor(private readonly _queryBus: QueryBus) {}
 
   @UseGuards(AuthGuard('jwt'))
@@ -40,4 +40,4 @@ class GetRequestsToJoinGroupSentByUserHttpController {
   }
 }
 
-export { GetRequestsToJoinGroupSentByUserHttpController };
+export { GetRequestsToJoinGroupHttpController };

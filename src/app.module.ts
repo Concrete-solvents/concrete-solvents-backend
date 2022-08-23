@@ -12,8 +12,8 @@ import { getNodeMailerConfig } from '../configs/nodeMailer.config';
 import joiSchema from '../joi.schema';
 import { getTypeormConfig } from '../configs/typeorm.config';
 import { GroupModule } from '@Group/group.module';
-import { JwtLocalModule } from './jwt-local/jwt-local.module';
-import { SocialModule } from './social/social.module';
+import { JwtLocalModule } from '@JwtLocal/jwt-local.module';
+import { SocialModule } from '@Social/social.module';
 import { UserRelationModule } from '@UserRelation/user-relation.module';
 import { FileUploaderModule } from '@FileUploader/file-uploader.module';
 

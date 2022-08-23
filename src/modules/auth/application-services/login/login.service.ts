@@ -60,7 +60,7 @@ class LoginService implements ICommandHandler {
         email: userInDB.email.value,
         avatarUrl: userInDB.avatarUrl,
         isVerified: userInDB.email.isConfirm,
-        description: userInDB.description
+        description: userInDB.description,
       },
     });
   }

@@ -1,5 +1,4 @@
 // Libraries
-import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-steam';
 import { Injectable } from '@nestjs/common';
@@ -9,7 +8,7 @@ import { SocialUser } from '@Auth/interfaces/social-user.interface';
 
 @Injectable()
 class SteamStrategy extends PassportStrategy(Strategy, 'steam') {
-  constructor(private readonly configService: ConfigService) {
+  constructor() {
     super({
       returnURL: 'http://localhost:3001/auth/social/steam/callback',
       realm: 'http://localhost:3001/',

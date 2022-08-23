@@ -9,9 +9,9 @@ import { GroupTypeormEntity } from '@Group/infrastructure/database/typeorm-entit
 
 // groupJoinRequest
 import { GetJoinRequestReceivedByGroupApplicationService } from '@GroupJoinRequest/application-services/get-join-request-received-by-group/get-join-request-received-by-group.application-service';
-import { GetRequestsToJoinGroupSentByUserApplicationService } from '@GroupJoinRequest/application-services/get-requests-to-join-group-sent-by-user/get-requests-to-join-group-sent-by-user.application-service';
+import { GetRequestsToJoinGroupApplicationService } from '@GroupJoinRequest/application-services/get-requests-to-join-group/get-requests-to-join-group.application-service';
 import { GetJoinRequestReceivedByGroupHttpController } from '@GroupJoinRequest/controllers/get-join-request-received-by-group/get-join-request-received-by-group-http-controller/get-join-request-received-by-group.http-controller';
-import { GetRequestsToJoinGroupSentByUserHttpController } from '@GroupJoinRequest/controllers/get-requests-to-join-group-sent-by-user/get-requests-to-join-group-sent-by-user-http-controller/get-requests-to-join-group-sent-by-user.http-controller';
+import { GetRequestsToJoinGroupHttpController } from '@GroupJoinRequest/controllers/get-requests-to-join-group/get-requests-to-join-group-http-controller/get-requests-to-join-group.http-controller';
 import { AcceptRequestToJoinGroupApplicationService } from '@GroupJoinRequest/application-services/accept-request-to-join-group/accept-request-to-join-group.application-service';
 import { CancelRequestToJoinGroupApplicationService } from '@GroupJoinRequest/application-services/cancel-request-to-join-group/cancel-request-to-join-group.application-service';
 import { RejectRequestToJoinGroupApplicationService } from '@GroupJoinRequest/application-services/reject-request-to-join-group/reject-request-to-join-group.application-service';
@@ -30,7 +30,7 @@ const httpControllers = [
   AcceptRequestToJoinGroupHttpController,
   RejectRequestToJoinGroupHttpController,
   CancelRequestToJoinGroupHttpController,
-  GetRequestsToJoinGroupSentByUserHttpController,
+  GetRequestsToJoinGroupHttpController,
   GetJoinRequestReceivedByGroupHttpController,
 ];
 
@@ -39,7 +39,7 @@ const applicationServices = [
   AcceptRequestToJoinGroupApplicationService,
   RejectRequestToJoinGroupApplicationService,
   CancelRequestToJoinGroupApplicationService,
-  GetRequestsToJoinGroupSentByUserApplicationService,
+  GetRequestsToJoinGroupApplicationService,
   GetJoinRequestReceivedByGroupApplicationService,
 ];
 

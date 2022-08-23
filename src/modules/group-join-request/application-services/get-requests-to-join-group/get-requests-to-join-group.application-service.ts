@@ -13,9 +13,7 @@ import { GetRequestsToJoinGroupSentByUserResponseDto } from '@GroupJoinRequest/d
 import { GroupJoinRequestTypeormEntity } from '@GroupJoinRequest/infrastructure/database/typeorm-entities/group-join-request.typeorm-entity';
 
 @QueryHandler(GetRequestsToJoinGroupSentByUserQuery)
-class GetRequestsToJoinGroupSentByUserApplicationService
-  implements IQueryHandler
-{
+class GetRequestsToJoinGroupApplicationService implements IQueryHandler {
   constructor(
     @InjectRepository(GroupJoinRequestTypeormEntity)
     private readonly _groupJoinRequestRepository: Repository<GroupJoinRequestTypeormEntity>,
@@ -58,4 +56,4 @@ class GetRequestsToJoinGroupSentByUserApplicationService
   }
 }
 
-export { GetRequestsToJoinGroupSentByUserApplicationService };
+export { GetRequestsToJoinGroupApplicationService };

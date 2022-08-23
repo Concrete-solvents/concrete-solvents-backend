@@ -1,6 +1,7 @@
 // Libraries
 import {
-  IsEmail, IsEnum,
+  IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   MaxLength,

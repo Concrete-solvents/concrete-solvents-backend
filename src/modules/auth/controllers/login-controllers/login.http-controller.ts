@@ -47,7 +47,6 @@ class LoginHttpController {
     const result: Result<LoginResponse, string> =
       await this._commandBus.execute(command);
 
-    // ToDo: replace with a command
     if (result.isOk()) {
       const unwrappedResult = result.unwrap();
 
