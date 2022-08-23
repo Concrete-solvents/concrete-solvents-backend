@@ -16,6 +16,8 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
 import { JwtLocalModule } from './jwt-local/jwt-local.module';
 import { SocialModule } from './social/social.module';
 import { UserRelationModule } from '@UserRelation/user-relation.module';
+import { FileUploadModule } from "@FileUploader/file-uploader.module";
+import {MulterModule} from "@nestjs/platform-express";
 
 @Module({
   imports: [
@@ -35,6 +37,9 @@ import { UserRelationModule } from '@UserRelation/user-relation.module';
       inject: [ConfigService],
       useFactory: getNodeMailerConfig,
     }),
+    MulterModule.register({
+      dest: './uploads'
+    }),
     JwtLocalModule,
     UserModule,
     AuthModule,
@@ -43,6 +48,7 @@ import { UserRelationModule } from '@UserRelation/user-relation.module';
     SocialModule,
     UserRelationModule,
     GroupModule,
+    FileUploadModule,
     GroupInviteModule,
     GroupJoinRequestModule,
     FileUploaderModule,
