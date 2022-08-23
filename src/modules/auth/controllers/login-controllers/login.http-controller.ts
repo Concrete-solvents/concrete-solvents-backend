@@ -60,7 +60,7 @@ class LoginHttpController {
     }
 
     res.status(HttpStatus.UNAUTHORIZED);
-    return result;
+    return result.unwrapErr();
   }
 }
 
