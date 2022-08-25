@@ -1,5 +1,13 @@
 // Libraries
-import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Response } from 'express';
 import { Result } from 'oxide.ts';
@@ -19,9 +27,15 @@ class GetGroupsByUserIdHttpController {
   async getGroupsByUserId(
     @Param('userId') userId: number,
     @Res({ passthrough: true }) res: Response,
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('page', ParseIntPipe) page: number,
+    @Query('filter') filter: string,
   ) {
     const getGroupsByUserIdQuery = new GetGroupsByUserIdQuery({
       userId,
+      limit,
+      page,
+      filter,
     });
 
     const result: Result<GetGroupsByUserIdResponseDto, CustomError> =

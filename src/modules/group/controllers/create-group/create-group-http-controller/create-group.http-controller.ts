@@ -38,6 +38,7 @@ class CreateGroupHttpController {
       name: dto.name,
       description: dto.description,
       ownerId: user.id,
+      avatarUrl: dto.avatarUrl,
     });
 
     const result: Result<boolean, CustomError> = await this._commandBus.execute(

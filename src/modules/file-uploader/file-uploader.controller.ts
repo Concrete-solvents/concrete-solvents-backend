@@ -39,7 +39,6 @@ class FileUploaderController {
   )
   async uploadedFile(@UploadedFile() file) {
     const response = {
-      originalname: file.originalname,
       filename: file.filename,
     };
     return {

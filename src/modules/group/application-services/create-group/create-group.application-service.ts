@@ -59,6 +59,11 @@ class CreateGroupApplicationService implements ICommandHandler {
 
     newGroup.name = command.name;
     newGroup.description = command.description;
+
+    if (command.avatarUrl) {
+      newGroup.avatarUrl = command.avatarUrl;
+    }
+
     newGroup.groupUserPermissions = [ownerPermissionInDB];
     newGroup.users = [ownerInDB];
 

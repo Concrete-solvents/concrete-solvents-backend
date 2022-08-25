@@ -8,8 +8,13 @@ class CreateGroupRequestDto {
   name: string;
 
   @IsOptional()
+  @IsString()
   @MaxLength(1024)
-  description: string;
+  description?: string;
+
+  @IsOptional()
+  @IsString()
+  avatarUrl?: string;
 }
 
 export { CreateGroupRequestDto };

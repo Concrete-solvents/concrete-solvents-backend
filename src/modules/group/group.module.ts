@@ -1,4 +1,6 @@
 // Libraries
+import { GetGroupByIdApplicationService } from '@Group/application-services/get-group-by-id/get-group-by-id.application-service';
+import { GetGroupByIdHttpController } from '@Group/controllers/get-group-by-id/get-group-by-id-http-controller/get-group-by-id.http-controller';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -41,6 +43,7 @@ const httpControllers = [
   GetGroupsByUserIdHttpController,
   ChangeGroupOwnerHttpController,
   EditGroupHttpController,
+  GetGroupByIdHttpController,
 ];
 
 const applicationServices = [
@@ -53,6 +56,7 @@ const applicationServices = [
   GetGroupsByUserIdApplicationService,
   ChangeGroupOwnerApplicationService,
   EditGroupApplicationService,
+  GetGroupByIdApplicationService,
 ];
 
 @Module({

@@ -1,4 +1,5 @@
 // Libraries
+import { CustomError } from '@Common/enums/custom-errors';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Err, Ok } from 'oxide.ts';
@@ -21,14 +22,17 @@ class UnblockUserApplicationService implements ICommandHandler {
       where: {
         firstUserId: command.userId,
         secondUserId: command.userToUnblockId,
+        type: UserRelationType.Block,
       },
     });
 
-    if (!userRelationInDB || userRelationInDB.type !== UserRelationType.Block) {
-      return Err('You are not blocking this user');
+    if (!userRelationInDB) {
+      return Err(CustomError.YouNotBlockingUser);
     }
 
-    await this._userRelationRepository.delete(userRelationInDB);
+    await this._userRelationRepository.delete({
+      id: userRelationInDB.id,
+    });
 
     return Ok(true);
   }
