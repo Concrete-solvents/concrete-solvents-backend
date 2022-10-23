@@ -31,6 +31,9 @@ class UpdateUserProfileHttpController {
       username: updateUserInfoDto.username,
       description: updateUserInfoDto.description,
       avatarUrl: updateUserInfoDto.avatarUrl,
+      email: user.email,
+      isVerified: user.isVerified,
+      login: user.login
     });
 
     const result: Result<boolean, CustomError> = await this._commandBus.execute(
@@ -38,7 +41,7 @@ class UpdateUserProfileHttpController {
     );
 
     if (result.isOk()) {
-      return result.unwrap();
+      return updateUserInfoCommand;
     }
 
     return result.unwrapErr();
