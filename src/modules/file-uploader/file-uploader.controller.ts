@@ -24,7 +24,7 @@ class FileUploaderController {
   constructor() {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Post('upload')
+  @Post('/upload')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
